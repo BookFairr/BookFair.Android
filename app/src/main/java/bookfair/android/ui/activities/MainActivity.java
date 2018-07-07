@@ -1,7 +1,9 @@
-package bookfair.android;
+package bookfair.android.ui.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import bookfair.android.R;
 
 public class MainActivity extends AppCompatActivity {
 
