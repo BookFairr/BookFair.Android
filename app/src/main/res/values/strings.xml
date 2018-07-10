@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">bookfair.android</string>
+    <string name="welcome_to_bookfair">Welcome to BookFair</string>
+    <string name="connecting_you_with_the_books_you_need">Connecting you with the books you need.</string>
 </resources>
