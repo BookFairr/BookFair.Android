@@ -1,4 +1,4 @@
 package bookfair.android.db;
 
-public class    BookFairRepository {
+public class BookFairRepository {
 }
