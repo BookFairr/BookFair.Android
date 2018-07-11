@@ -16,13 +16,13 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class WelcomeActivity extends BaseActivity {
 
-@BindView(R.id.launch_login)
+    @BindView(R.id.launch_login)
     FancyButton launchLoginBtn;
 
-@BindView(R.id.launch_signup)
+    @BindView(R.id.launch_signup)
     FancyButton launchSignUpBtn;
 
-@Inject
+    @Inject
     PreferenceManager preferenceManager;
 
     @Override
@@ -42,7 +42,7 @@ public class WelcomeActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    private void goToSignUpActivity () {
+    private void goToSignUpActivity() {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }

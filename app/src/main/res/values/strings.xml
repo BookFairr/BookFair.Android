@@ -16,4 +16,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="signup_today">Sign up to buy and sell books with friends and their community.</string>
+    <string name="email_hint">Email</string>
 </resources>
