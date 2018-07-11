@@ -10,7 +10,7 @@
         <item name="colorAccent">@color/accent</item>
 
         <item name="colorControlActivated">@color/accent</item>
-        <item name="android:windowTranslucentStatus" tools:targetApi="21">true</item>
+        <item name="android:windowTranslucentStatus" tools:targetApi="21">false</item>
 
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionBar">false</item>
