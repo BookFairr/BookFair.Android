@@ -19,4 +19,7 @@
     <string name="signup_today">Sign up to buy and sell books with friends and their community.</string>
     <string name="email_hint">Email</string>
     <string name="full_name">Full Name</string>
+    <string name="title_activity_login2">Sign in</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>

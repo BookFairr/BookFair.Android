@@ -10,17 +10,16 @@
     <LinearLayout
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:orientation="vertical">
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:srcCompat="@drawable/ic_android_purple_24dp" />
 
         <android.support.v7.widget.AppCompatTextView
@@ -52,17 +51,17 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:weightSum="1">
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight=".5"
-                android:background="@color/divider"
-                android:layout_marginTop="10dp"/>
+                android:background="@color/divider" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -75,9 +74,9 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight=".5"
-                android:background="@color/divider"
-                android:layout_marginTop="10dp"/>
+                android:background="@color/divider" />
         </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -91,9 +90,11 @@
                 android:id="@+id/email_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/divider"
                 android:hint="@string/email_hint"
                 android:inputType="textEmailAddress"
-                android:backgroundTint="@color/divider"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="@color/primary_text" />
         </android.support.design.widget.TextInputLayout>
 
@@ -108,9 +109,11 @@
                 android:id="@+id/fullname_editTex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/divider"
                 android:hint="@string/full_name"
                 android:inputType="textPersonName"
-                android:backgroundTint="@color/divider"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="@color/primary_text" />
         </android.support.design.widget.TextInputLayout>
 
@@ -126,8 +129,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/divider"
-                android:hint="Username"
+                android:hint="@string/username"
                 android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="@color/primary_text" />
         </android.support.design.widget.TextInputLayout>
 
@@ -144,9 +149,11 @@
                 android:id="@+id/password_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Pssword"
-                android:inputType="textPassword"
                 android:backgroundTint="@color/divider"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="@color/primary_text" />
         </android.support.design.widget.TextInputLayout>
 
