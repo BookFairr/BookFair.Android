@@ -61,7 +61,7 @@ public class SignUpActivity extends BaseActivity {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signUp();
+                attemptSignUp();
             }
         });
     }
@@ -70,11 +70,7 @@ public class SignUpActivity extends BaseActivity {
 
     }
 
-    private void signUp() {
-        editTextValidation();
-    }
-
-    private void editTextValidation() {
+    private void attemptSignUp() {
 
         // Reset errors.
         emailEditText.setError(null);
@@ -125,7 +121,12 @@ public class SignUpActivity extends BaseActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
+            signUpGo();
         }
+    }
+
+    private void signUpGo() {
+
     }
 }
 
