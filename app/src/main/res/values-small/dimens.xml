@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="default_margin">15dp</dimen>
+    <dimen name="default_margin">30dp</dimen>
     <dimen name="default_padding">5dp</dimen>
     <dimen name="default_margin_top">5dp</dimen>
+    <dimen name="signup_login_btn_width">200</dimen>
+    <dimen name="signup_login_btn_height">50</dimen>
 
 </resources>
