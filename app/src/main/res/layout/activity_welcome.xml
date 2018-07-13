@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         app:srcCompat="@drawable/ic_android_black_24dp"/>
 
     <android.support.v7.widget.AppCompatTextView
@@ -40,7 +40,7 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
