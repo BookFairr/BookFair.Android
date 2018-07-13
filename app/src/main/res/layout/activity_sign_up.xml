@@ -11,7 +11,7 @@
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/default_padding"
         android:orientation="vertical">
 
         <android.support.v7.widget.AppCompatImageView
@@ -19,16 +19,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/default_margin_top"
             app:srcCompat="@drawable/ic_android_purple_24dp" />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/default_margin_top"
             android:text="@string/signup_today"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/secondary_text"
             android:textStyle="bold" />
 
@@ -37,11 +37,11 @@
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
+            android:layout_marginTop="@dimen/default_margin_top"
+            android:paddingBottom="@dimen/default_padding"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:paddingTop="@dimen/default_padding"
             fancy:fb_defaultColor="@color/facebook_blue"
             fancy:fb_radius="7dp"
             fancy:fb_text="Log in with Facebook"
@@ -52,14 +52,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/default_margin_top"
             android:orientation="horizontal"
             android:weightSum="1">
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/default_margin_top"
                 android:layout_weight=".5"
                 android:background="@color/divider" />
 
@@ -74,7 +74,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/default_margin_top"
                 android:layout_weight=".5"
                 android:background="@color/divider" />
         </LinearLayout>
@@ -162,10 +162,10 @@
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
+            android:paddingBottom="@dimen/default_padding"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:paddingTop="@dimen/default_padding"
             fancy:fb_defaultColor="@color/accent"
             fancy:fb_radius="7dp"
             fancy:fb_text="Sign Up"

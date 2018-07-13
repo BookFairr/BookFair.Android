@@ -14,14 +14,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         app:srcCompat="@drawable/ic_android_black_24dp" />
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:text="@string/welcome_to_bookfair"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/icons" />
@@ -32,7 +32,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:text="@string/connecting_you_with_the_books_you_need"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/icons" />
 
     <mehdi.sakout.fancybuttons.FancyButton

@@ -24,7 +24,7 @@ public class SignUpActivity extends BaseActivity {
     PreferenceManager preferenceManager;
     @BindView(R.id.facebook_login_btn)
     FancyButton facebookLoginBtn;
-    @BindView(R.id.email_editText)
+   /** @BindView(R.id.email_editText)
     TextInputEditText emailEditText;
     @BindView(R.id.email_layout)
     TextInputLayout emailLayout;
@@ -35,7 +35,7 @@ public class SignUpActivity extends BaseActivity {
     @BindView(R.id.username_editText)
     TextInputEditText usernameEditText;
     @BindView(R.id.username_layout)
-    TextInputLayout usernameLayout;
+    TextInputLayout usernameLayout; */
     @BindView(R.id.password_editText)
     TextInputEditText passwordEditText;
     @BindView(R.id.password_layout)
@@ -52,7 +52,7 @@ public class SignUpActivity extends BaseActivity {
         ButterKnife.bind(this);
         applicationComponent(this).inject(SignUpActivity.this);
 
-        facebookLoginBtn.setOnClickListener(new View.OnClickListener() {
+       /** facebookLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 facebookLogin();
@@ -63,10 +63,10 @@ public class SignUpActivity extends BaseActivity {
             public void onClick(View v) {
                 attemptSignUp();
             }
-        });
+        }); */
     }
 
-    private void facebookLogin() {
+  /**  private void facebookLogin() {
 
     }
 
@@ -127,6 +127,6 @@ public class SignUpActivity extends BaseActivity {
 
     private void signUpGo() {
 
-    }
+    } */
 }
 
