@@ -8,7 +8,7 @@ public class PreferenceManager {
      private static SharedPreferences preferences;
      private SharedPreferences.Editor editor;
 
-     public static final String PREF_FILE_NAME = "staff_genius_preferences";
+     public static final String PREF_FILE_NAME = "book_fair_preferences";
      private static final String IS_LOGIN = "is_logged_in";
 
      public PreferenceManager(Context context) {
@@ -19,7 +19,14 @@ public class PreferenceManager {
           preferences.edit().clear().apply();
      }
 
+     /**
+      * Checks to see if the user is logged in.
+      *
+      * @return
+      */
      public boolean isUserLoggedIn() {
-          return preferences.getBoolean(IS_LOGIN, false);
+          if (preferences.getBoolean(IS_LOGIN, false)) return true;
+          else return false;
      }
+
 }
