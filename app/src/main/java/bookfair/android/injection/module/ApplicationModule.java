@@ -4,9 +4,13 @@ import android.app.Application;
 
 import javax.inject.Singleton;
 
+import bookfair.android.BuildConfig;
 import bookfair.android.core.PreferenceManager;
+import bookfair.android.db.BookFairRepository;
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 @Module
 public class ApplicationModule {
@@ -21,5 +25,25 @@ public class ApplicationModule {
     PreferenceManager providePreferenceManager() {
         return new PreferenceManager(app);
     }
+
+    RealmConfiguration provideRealmConfiguration () {
+
+        RealmConfiguration.Builder builder = new RealmConfiguration.Builder();
+        if (BuildConfig.DEBUG) {
+            builder = builder.deleteRealmIfMigrationNeeded();
+        }
+        return builder.build();
+    }
+
+    @Provides
+    Realm provideRealm () {
+        return Realm.getInstance(provideRealmConfiguration());
+    }
+
+    @Provides
+    BookFairRepository provideBookFairRepository () {
+        return new BookFairRepository(app);
+    }
+
 
 }
