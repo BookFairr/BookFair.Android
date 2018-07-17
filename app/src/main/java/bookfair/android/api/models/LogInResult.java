@@ -6,15 +6,24 @@ import bookfair.android.db.models.UserProfile;
 
 public class LogInResult {
 
-    private boolean status;
+    private boolean success;
+    private String error;
     private List<UserProfile> data;
 
-    public boolean isStatus() {
-        return status;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 
     public List<UserProfile> getData() {
