@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -11,17 +12,31 @@ import android.widget.Toast;
 import javax.inject.Inject;
 
 import bookfair.android.R;
+import bookfair.android.api.BookFairApiService;
+import bookfair.android.api.models.SignUpResult;
 import bookfair.android.core.PreferenceManager;
+import bookfair.android.db.BookFairRepository;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.Lazy;
 import mehdi.sakout.fancybuttons.FancyButton;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static bookfair.android.util.Util.isEmailValid;
 
 public class SignUpActivity extends BaseActivity {
 
+    private static final String TAG = SignUpActivity.class.getSimpleName();
+
+
     @Inject
     PreferenceManager preferenceManager;
+    @Inject
+    Lazy<BookFairApiService> bookFairApiServiceLazy;
+    @Inject
+    BookFairRepository bookFairRepository;
+
     @BindView(R.id.facebook_login_btn)
     FancyButton facebookLoginBtn;
     @BindView(R.id.email_editText)
@@ -120,12 +135,36 @@ public class SignUpActivity extends BaseActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
             signUpGo();
         }
     }
 
     private void signUpGo() {
+
+        retrofit2.Call<SignUpResult> resultCall = bookFairApiServiceLazy.get().attemptSignUp(emailEditText.getText().toString(), fullNameEditTex.getText().toString(),
+                usernameEditText.getText().toString(), passwordEditText.getText().toString());
+
+        resultCall.enqueue(new Callback<SignUpResult>() {
+            @Override
+            public void onResponse(retrofit2.Call<SignUpResult> call, Response<SignUpResult> response) {
+                if (response.body().isSuccess()) {
+                    preferenceManager.setLoggedInStatus(true);
+                    bookFairRepository.saveUserProfiles(response.body().getData());
+                    Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
+
+
+                } else {
+                    Toast.makeText(SignUpActivity.this, "Error", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<SignUpResult> call, Throwable t) {
+                // Log error here if request failed
+                Log.e(TAG, t.toString());
+            }
+        });
 
     }
 }

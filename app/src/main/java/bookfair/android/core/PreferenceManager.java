@@ -20,13 +20,13 @@ public class PreferenceManager {
      }
 
      /**
-      * Checks to see if the user is logged in.
+      * sets current status of the user
       *
-      * @return
+      * @param status
       */
-     public boolean isUserLoggedIn() {
-          if (preferences.getBoolean(IS_LOGIN, false)) return true;
-          else return false;
+     public void setLoggedInStatus(boolean status) {
+         editor.putBoolean(IS_LOGIN, status);
+         editor.commit();
      }
 
 }

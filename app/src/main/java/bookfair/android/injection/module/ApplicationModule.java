@@ -5,6 +5,8 @@ import android.app.Application;
 import javax.inject.Singleton;
 
 import bookfair.android.BuildConfig;
+import bookfair.android.api.BookFairApiService;
+import bookfair.android.api.RetrofitHelper;
 import bookfair.android.core.PreferenceManager;
 import bookfair.android.db.BookFairRepository;
 import dagger.Module;
@@ -45,5 +47,10 @@ public class ApplicationModule {
         return new BookFairRepository(app);
     }
 
+    @Singleton
+    @Provides
+    BookFairApiService provideBookFairApiService() {
+        return new RetrofitHelper(app).bookFairApiService();
+    }
 
 }

@@ -30,4 +30,17 @@ public class BookFairRepository extends BaseComponent {
     public RealmResults<UserProfile> fetchProfilesAsync () {
         return database.get().where(UserProfile.class).findAllAsync();
     }
+
+    public UserProfile getUserProfile(String email) {
+        return database.get().where(UserProfile.class).equalTo("email", email).findFirst();
+    }
+
+    public void saveUserProfiles(List<UserProfile> list) {
+        database.get().executeTransaction(realm -> realm.copyToRealmOrUpdate(list) );
+    }
+
+    public Provider<Realm> getDatabase() {
+        return database;
+    }
+
 }

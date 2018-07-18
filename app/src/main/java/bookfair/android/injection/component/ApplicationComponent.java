@@ -3,6 +3,7 @@ package bookfair.android.injection.component;
 
 import javax.inject.Singleton;
 
+import bookfair.android.api.RetrofitHelper;
 import bookfair.android.db.BookFairRepository;
 import bookfair.android.injection.module.ApplicationModule;
 import bookfair.android.ui.activities.BaseActivity;
@@ -20,5 +21,6 @@ public interface ApplicationComponent {
     void inject (WelcomeActivity welcomeActivity);
     void inject (LoginActivity loginActivity);
     void inject (SignUpActivity signUpActivity);
+    void inject (RetrofitHelper retrofitHelper);
 
 }

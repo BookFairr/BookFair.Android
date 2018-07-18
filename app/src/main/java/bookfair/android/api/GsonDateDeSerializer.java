@@ -22,5 +22,4 @@ public class GsonDateDeSerializer implements JsonDeserializer<Date> {
         }
     }
 
-
 }
