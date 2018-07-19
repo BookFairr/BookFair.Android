@@ -1,8 +1,10 @@
 package bookfair.android.ui.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +25,8 @@ import mehdi.sakout.fancybuttons.FancyButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static bookfair.android.ui.views.SnackBarFactory.createSnackbar;
 
 public class LoginActivity extends BaseActivity {
 
@@ -50,6 +54,10 @@ public class LoginActivity extends BaseActivity {
     LinearLayout linearLayout;
     @BindView(R.id.login_btn)
     FancyButton loginBtn;
+    @BindView(R.id.logo)
+    AppCompatImageView logo;
+    @BindView(R.id.login_coordinator)
+    CoordinatorLayout loginCoordinator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +80,7 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private void attemptLogin () {
+    private void attemptLogin() {
 
         //Reset errors.
         loginEmailEditText.setError(null);
@@ -99,7 +107,7 @@ public class LoginActivity extends BaseActivity {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
-        }   else {
+        } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
@@ -107,7 +115,7 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private void logInGo () {
+    private void logInGo() {
 
         Call<LogInResult> resultCall = bookFairApiServiceLazy.get().attemptLogIn(loginEmailEditText.getText().toString(), loginPasswordEditText.getText().toString());
 
@@ -119,7 +127,7 @@ public class LoginActivity extends BaseActivity {
                     Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    createSnackbar(LoginActivity.this, loginCoordinator, response.body().getErrorMessage()).show();
 
                 }
             }
@@ -132,7 +140,7 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private void facebookLogin () {
+    private void facebookLogin() {
 
     }
 }

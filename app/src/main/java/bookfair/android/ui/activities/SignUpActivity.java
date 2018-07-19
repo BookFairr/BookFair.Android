@@ -3,6 +3,7 @@ package bookfair.android.ui.activities;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
@@ -28,6 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static bookfair.android.ui.views.SnackBarFactory.createSnackbar;
 import static bookfair.android.util.Util.isEmailValid;
 
 public class SignUpActivity extends BaseActivity {
@@ -64,6 +66,8 @@ public class SignUpActivity extends BaseActivity {
     FancyButton signupBtn;
     @BindView(R.id.linear_layout)
     LinearLayout linearLayout;
+    @BindView(R.id.sign_up_coordinator)
+    CoordinatorLayout signUpCoordinator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +108,7 @@ public class SignUpActivity extends BaseActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (emailEditText.getText().hashCode() == s.hashCode() && fullNameEditTex.getText().hashCode() == s.hashCode() &&
-                            usernameEditText.getText().hashCode() == s.hashCode() && passwordEditText.getText().hashCode() == s.hashCode())
-                    {
+                            usernameEditText.getText().hashCode() == s.hashCode() && passwordEditText.getText().hashCode() == s.hashCode()) {
                         signupBtn.getBackground().setColorFilter(null);
                         signupBtn.setClickable(true);
 
@@ -194,13 +197,12 @@ public class SignUpActivity extends BaseActivity {
 
 
                 } else {
-                    Toast.makeText(SignUpActivity.this, "Error", Toast.LENGTH_SHORT).show();
-
+                    createSnackbar(SignUpActivity.this, signUpCoordinator, response.body().getErrorMessage()).show();
                 }
             }
 
             @Override
-            public void onFailure(retrofit2.Call<SignUpResult> call, Throwable t) {
+            public void onFailure(Call<SignUpResult> call, Throwable t) {
                 // Log error here if request failed
                 Log.e(TAG, t.toString());
             }
