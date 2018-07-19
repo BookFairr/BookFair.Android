@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.net.UnknownHostException;
+
 import javax.inject.Inject;
 
 import bookfair.android.R;
@@ -31,7 +33,7 @@ import static bookfair.android.ui.views.SnackBarFactory.createSnackbar;
 public class LoginActivity extends BaseActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
-
+    private boolean loginErrorOccured;
 
     @Inject
     PreferenceManager preferenceManager;
@@ -128,14 +130,17 @@ public class LoginActivity extends BaseActivity {
 
                 } else {
                     createSnackbar(LoginActivity.this, loginCoordinator, response.body().getErrorMessage()).show();
-
+                    loginErrorOccured = true;
                 }
             }
 
             @Override
             public void onFailure(Call<LogInResult> call, Throwable t) {
-                // Log error here if request failed
-                Log.e(TAG, t.toString());
+                if (t instanceof UnknownHostException) {
+                }else {
+                    //crashlytics goes here "Crashlytics.logException(t);"
+                    createSnackbar(LoginActivity.this, loginCoordinator, "Yikes! Check your internet connection.").show();
+                }
             }
         });
     }

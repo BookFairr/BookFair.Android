@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.net.UnknownHostException;
+
 import javax.inject.Inject;
 
 import bookfair.android.R;
@@ -35,6 +37,7 @@ import static bookfair.android.util.Util.isEmailValid;
 public class SignUpActivity extends BaseActivity {
 
     private static final String TAG = SignUpActivity.class.getSimpleName();
+    private boolean signUpErrorOccured;
 
 
     @Inject
@@ -195,16 +198,19 @@ public class SignUpActivity extends BaseActivity {
                     bookFairRepository.saveUserProfile(response.body().getUserProfile());
                     Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
 
-
                 } else {
                     createSnackbar(SignUpActivity.this, signUpCoordinator, response.body().getErrorMessage()).show();
+                    signUpErrorOccured = true;
                 }
             }
 
             @Override
             public void onFailure(Call<SignUpResult> call, Throwable t) {
-                // Log error here if request failed
-                Log.e(TAG, t.toString());
+                if (t instanceof UnknownHostException) {
+                }else {
+                    //crashlytics goes here "Crashlytics.logException(t);"
+                    createSnackbar(SignUpActivity.this, signUpCoordinator, "Yikes! Check your internet connection.").show();
+                }
             }
         });
 
