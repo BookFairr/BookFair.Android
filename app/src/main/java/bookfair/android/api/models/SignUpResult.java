@@ -1,14 +1,12 @@
 package bookfair.android.api.models;
 
-import java.util.List;
-
 import bookfair.android.db.models.UserProfile;
 
 public class SignUpResult {
 
     private boolean success;
-    private String error;
-    private List<UserProfile> data;
+    private String errorMessage;
+    private UserProfile userProfile;
 
     public boolean isSuccess() {
         return success;
@@ -17,18 +15,19 @@ public class SignUpResult {
         this.success = success;
     }
 
-    public String getError() {
-        return error;
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
-    public List<UserProfile> getData() {
-        return data;
+    public UserProfile getUserProfile() {
+        return userProfile;
     }
-    public void setData(List<UserProfile> data) {
-        this.data = data;
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
     }
 }

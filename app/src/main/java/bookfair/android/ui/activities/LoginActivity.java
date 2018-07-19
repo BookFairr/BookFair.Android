@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -11,24 +12,38 @@ import android.widget.Toast;
 import javax.inject.Inject;
 
 import bookfair.android.R;
+import bookfair.android.api.BookFairApiService;
+import bookfair.android.api.models.LogInResult;
 import bookfair.android.core.PreferenceManager;
+import bookfair.android.db.BookFairRepository;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.Lazy;
 import mehdi.sakout.fancybuttons.FancyButton;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends BaseActivity {
 
+    private static final String TAG = LoginActivity.class.getSimpleName();
+
+
     @Inject
     PreferenceManager preferenceManager;
+    @Inject
+    Lazy<BookFairApiService> bookFairApiServiceLazy;
+    @Inject
+    BookFairRepository bookFairRepository;
 
-    @BindView(R.id.email_or_username_editText)
-    TextInputEditText emailOrUsernameEditText;
-    @BindView(R.id.email_or_username_layout)
-    TextInputLayout emailOrUsernameLayout;
-    @BindView(R.id.password_editText)
-    TextInputEditText passwordEditText;
-    @BindView(R.id.password_layout)
-    TextInputLayout passwordLayout;
+    @BindView(R.id.login_email_editText)
+    TextInputEditText loginEmailEditText;
+    @BindView(R.id.login_email_layout)
+    TextInputLayout loginEmailLayout;
+    @BindView(R.id.login_password_editText)
+    TextInputEditText loginPasswordEditText;
+    @BindView(R.id.login_password_layout)
+    TextInputLayout loginPasswordLayout;
     @BindView(R.id.facebook_login_btn)
     FancyButton facebookLoginBtn;
     @BindView(R.id.linear_layout)
@@ -60,23 +75,23 @@ public class LoginActivity extends BaseActivity {
     private void attemptLogin () {
 
         //Reset errors.
-        emailOrUsernameEditText.setError(null);
-        passwordEditText.setError(null);
+        loginEmailEditText.setError(null);
+        loginPasswordEditText.setError(null);
 
         boolean cancel = false;
         View focusView = null;
 
         //Check for a valid email.
-        if (TextUtils.isEmpty(emailOrUsernameEditText.getText().toString())) {
-            emailOrUsernameEditText.setError(getString(R.string.error_field_required));
-            focusView = emailOrUsernameEditText;
+        if (TextUtils.isEmpty(loginEmailEditText.getText().toString())) {
+            loginEmailEditText.setError(getString(R.string.error_field_required));
+            focusView = loginEmailEditText;
             cancel = true;
         }
 
         //Check for a valid password.
-        if (TextUtils.isEmpty(passwordEditText.getText().toString())) {
-            passwordEditText.setError(getString(R.string.error_field_required));
-            focusView = emailOrUsernameEditText;
+        if (TextUtils.isEmpty(loginPasswordEditText.getText().toString())) {
+            loginPasswordEditText.setError(getString(R.string.error_field_required));
+            focusView = loginEmailEditText;
             cancel = true;
         }
 
@@ -94,6 +109,27 @@ public class LoginActivity extends BaseActivity {
 
     private void logInGo () {
 
+        Call<LogInResult> resultCall = bookFairApiServiceLazy.get().attemptLogIn(loginEmailEditText.getText().toString(), loginPasswordEditText.getText().toString());
+
+        resultCall.enqueue(new Callback<LogInResult>() {
+            @Override
+            public void onResponse(Call<LogInResult> call, Response<LogInResult> response) {
+                if (response.body().isSuccess()) {
+                    preferenceManager.setLoggedInStatus(true);
+                    Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LogInResult> call, Throwable t) {
+                // Log error here if request failed
+                Log.e(TAG, t.toString());
+            }
+        });
     }
 
     private void facebookLogin () {

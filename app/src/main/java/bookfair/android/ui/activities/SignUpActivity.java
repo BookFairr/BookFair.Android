@@ -1,9 +1,13 @@
 package bookfair.android.ui.activities;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.Lazy;
 import mehdi.sakout.fancybuttons.FancyButton;
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
@@ -51,9 +56,9 @@ public class SignUpActivity extends BaseActivity {
     TextInputEditText usernameEditText;
     @BindView(R.id.username_layout)
     TextInputLayout usernameLayout;
-    @BindView(R.id.password_editText)
+    @BindView(R.id.login_password_editText)
     TextInputEditText passwordEditText;
-    @BindView(R.id.password_layout)
+    @BindView(R.id.login_password_layout)
     TextInputLayout passwordLayout;
     @BindView(R.id.signup_btn)
     FancyButton signupBtn;
@@ -66,6 +71,7 @@ public class SignUpActivity extends BaseActivity {
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
         applicationComponent(this).inject(SignUpActivity.this);
+        greyOutBtn();
 
         facebookLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +85,40 @@ public class SignUpActivity extends BaseActivity {
                 attemptSignUp();
             }
         });
+    }
+
+    private void greyOutBtn() {
+
+        if (TextUtils.isEmpty(emailEditText.getText()) || TextUtils.isEmpty(fullNameEditTex.getText()) ||
+                TextUtils.isEmpty(usernameEditText.getText()) || TextUtils.isEmpty(passwordEditText.getText())) {
+            signupBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            signupBtn.setClickable(false);
+        } else {
+
+            TextWatcher textWatcher = new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (emailEditText.getText().hashCode() == s.hashCode() && fullNameEditTex.getText().hashCode() == s.hashCode() &&
+                            usernameEditText.getText().hashCode() == s.hashCode() && passwordEditText.getText().hashCode() == s.hashCode())
+                    {
+                        signupBtn.getBackground().setColorFilter(null);
+                        signupBtn.setClickable(true);
+
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            };
+
+        }
     }
 
     private void facebookLogin() {
@@ -141,15 +181,15 @@ public class SignUpActivity extends BaseActivity {
 
     private void signUpGo() {
 
-        retrofit2.Call<SignUpResult> resultCall = bookFairApiServiceLazy.get().attemptSignUp(emailEditText.getText().toString(), fullNameEditTex.getText().toString(),
+        Call<SignUpResult> resultCall = bookFairApiServiceLazy.get().attemptSignUp(emailEditText.getText().toString(), fullNameEditTex.getText().toString(),
                 usernameEditText.getText().toString(), passwordEditText.getText().toString());
 
         resultCall.enqueue(new Callback<SignUpResult>() {
             @Override
-            public void onResponse(retrofit2.Call<SignUpResult> call, Response<SignUpResult> response) {
+            public void onResponse(Call<SignUpResult> call, Response<SignUpResult> response) {
                 if (response.body().isSuccess()) {
                     preferenceManager.setLoggedInStatus(true);
-                    bookFairRepository.saveUserProfiles(response.body().getData());
+                    bookFairRepository.saveUserProfile(response.body().getUserProfile());
                     Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
 
 
