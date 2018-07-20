@@ -9,7 +9,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.net.UnknownHostException;
 
@@ -112,8 +115,8 @@ public class LoginActivity extends BaseActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
             logInGo();
+            showIndeterminateProgressDialog();
         }
     }
 
@@ -126,7 +129,6 @@ public class LoginActivity extends BaseActivity {
             public void onResponse(Call<LogInResult> call, Response<LogInResult> response) {
                 if (response.body().isSuccess()) {
                     preferenceManager.setLoggedInStatus(true);
-                    Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
 
                 } else {
                     createSnackbar(LoginActivity.this, loginCoordinator, response.body().getErrorMessage()).show();
@@ -139,7 +141,7 @@ public class LoginActivity extends BaseActivity {
                 if (t instanceof UnknownHostException) {
                 }else {
                     //crashlytics goes here "Crashlytics.logException(t);"
-                    createSnackbar(LoginActivity.this, loginCoordinator, "Yikes! Check your internet connection.").show();
+                    createSnackbar(LoginActivity.this, loginCoordinator, "Oops! Network error occurred. Try Again").show();
                 }
             }
         });
@@ -147,5 +149,13 @@ public class LoginActivity extends BaseActivity {
 
     private void facebookLogin() {
 
+    }
+
+    private void showIndeterminateProgressDialog() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.progress_dialog)
+                .content(R.string.please_wait)
+                .progress(true, 0)
+                .show();
     }
 }

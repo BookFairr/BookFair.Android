@@ -209,7 +209,7 @@ public class SignUpActivity extends BaseActivity {
                 if (t instanceof UnknownHostException) {
                 }else {
                     //crashlytics goes here "Crashlytics.logException(t);"
-                    createSnackbar(SignUpActivity.this, signUpCoordinator, "Yikes! Check your internet connection.").show();
+                    createSnackbar(SignUpActivity.this, signUpCoordinator, "Oops! Network error occurred. Try Again").show();
                 }
             }
         });

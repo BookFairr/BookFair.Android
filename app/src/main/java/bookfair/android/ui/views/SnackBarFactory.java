@@ -6,6 +6,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
+import bookfair.android.R;
 
 public class SnackBarFactory {
 
