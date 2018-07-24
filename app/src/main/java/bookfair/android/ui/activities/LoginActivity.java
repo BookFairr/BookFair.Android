@@ -119,7 +119,7 @@ public class LoginActivity extends BaseActivity {
 
                         // Set Logged In status to 'true'
                         preferenceManager.setLoggedInStatus(getApplicationContext(), true);
-                        bookFairRepository.saveUserProfile(response.body().getProfile());
+                        //bookFairRepository.saveUserProfile(response.body().getProfile());
 
                         loginBtn.doResult(true);
 
