@@ -78,7 +78,6 @@ public class SignUpActivity extends BaseActivity {
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
         applicationComponent(this).inject(SignUpActivity.this);
-        greyOutBtn();
 
         facebookLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,39 +91,6 @@ public class SignUpActivity extends BaseActivity {
                 attemptSignUp();
             }
         });
-    }
-
-    private void greyOutBtn() {
-
-        if (TextUtils.isEmpty(emailEditText.getText()) || TextUtils.isEmpty(fullNameEditTex.getText()) ||
-                TextUtils.isEmpty(usernameEditText.getText()) || TextUtils.isEmpty(passwordEditText.getText())) {
-            signupBtn.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-            signupBtn.setClickable(false);
-        } else {
-
-            TextWatcher textWatcher = new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (emailEditText.getText().hashCode() == s.hashCode() && fullNameEditTex.getText().hashCode() == s.hashCode() &&
-                            usernameEditText.getText().hashCode() == s.hashCode() && passwordEditText.getText().hashCode() == s.hashCode()) {
-                        signupBtn.getBackground().setColorFilter(null);
-                        signupBtn.setClickable(true);
-
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            };
-
-        }
     }
 
     private void facebookLogin() {
