@@ -11,4 +11,6 @@
     <color name="divider">#BDBDBD</color>
 
     <color name="facebook_blue">#2196F3</color>
+    <color name="color_button_failed">#e74c3c</color>
+
 </resources>

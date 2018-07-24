@@ -4,16 +4,16 @@ import bookfair.android.db.models.UserProfile;
 
 public class LogInResult {
 
-    private boolean success;
+    private boolean error;
     private String errorMessage;
     private UserProfile profile;
 
-    public boolean isSuccess() {
-        return success;
+    public boolean isError() {
+        return error;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public void setError(boolean error) {
+        this.error = error;
     }
 
     public String getErrorMessage() {

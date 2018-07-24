@@ -1,10 +1,9 @@
 package bookfair.android.ui.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
 
 import javax.inject.Inject;
 
@@ -24,6 +23,8 @@ public class WelcomeActivity extends BaseActivity {
 
     @Inject
     PreferenceManager preferenceManager;
+    @BindView(R.id.welcome_layout)
+    LinearLayout welcomeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,19 @@ public class WelcomeActivity extends BaseActivity {
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
         applicationComponent(this).inject(this);
+
+        // Check if UserResponse is Already Logged In
+        if (PreferenceManager.getLoggedInStatus(getApplicationContext())) {
+
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+
+        } else {
+            welcomeLayout.setVisibility(View.VISIBLE);
+        }
+
 
         launchLoginBtn.setOnClickListener(v -> goToLoginActivity());
 

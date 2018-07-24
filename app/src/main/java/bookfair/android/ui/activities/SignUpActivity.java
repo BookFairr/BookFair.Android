@@ -194,7 +194,7 @@ public class SignUpActivity extends BaseActivity {
             @Override
             public void onResponse(Call<SignUpResult> call, Response<SignUpResult> response) {
                 if (response.body().isSuccess()) {
-                    preferenceManager.setLoggedInStatus(true);
+                    //preferenceManager.setLoggedInStatus(true);
                     bookFairRepository.saveUserProfile(response.body().getUserProfile());
                     Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
 

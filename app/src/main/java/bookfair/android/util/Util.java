@@ -12,4 +12,12 @@ public class Util {
         }
     }
 
+    public final static boolean passwordStrength(String password) {
+        if (password.trim().length() > 5)
+            return true;
+        else
+            return false;
+
+    }
+
 }

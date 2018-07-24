@@ -1,18 +1,17 @@
 package bookfair.android.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.unstoppable.submitbuttonview.SubmitButton;
 
 import java.net.UnknownHostException;
 
@@ -32,6 +31,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static bookfair.android.ui.views.SnackBarFactory.createSnackbar;
+import static bookfair.android.util.Util.isEmailValid;
 
 public class LoginActivity extends BaseActivity {
 
@@ -58,7 +58,7 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.linear_layout)
     LinearLayout linearLayout;
     @BindView(R.id.login_btn)
-    FancyButton loginBtn;
+    SubmitButton loginBtn;
     @BindView(R.id.logo)
     AppCompatImageView logo;
     @BindView(R.id.login_coordinator)
@@ -87,61 +87,64 @@ public class LoginActivity extends BaseActivity {
 
     private void attemptLogin() {
 
-        //Reset errors.
-        loginEmailEditText.setError(null);
-        loginPasswordEditText.setError(null);
-
-        boolean cancel = false;
-        View focusView = null;
-
         //Check for a valid email.
         if (TextUtils.isEmpty(loginEmailEditText.getText().toString())) {
             loginEmailEditText.setError(getString(R.string.error_field_required));
-            focusView = loginEmailEditText;
-            cancel = true;
+            loginBtn.reset();
+            return;
+        }
+
+        if (!isEmailValid(loginEmailEditText.getText().toString())) {
+            loginEmailEditText.setError(getString(R.string.error_invalid_email));
+            loginBtn.reset();
+            return;
         }
 
         //Check for a valid password.
         if (TextUtils.isEmpty(loginPasswordEditText.getText().toString())) {
             loginPasswordEditText.setError(getString(R.string.error_field_required));
-            focusView = loginEmailEditText;
-            cancel = true;
+            loginBtn.reset();
+            return;
         }
 
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            logInGo();
-            showIndeterminateProgressDialog();
-        }
-    }
-
-    private void logInGo() {
 
         Call<LogInResult> resultCall = bookFairApiServiceLazy.get().attemptLogIn(loginEmailEditText.getText().toString(), loginPasswordEditText.getText().toString());
 
         resultCall.enqueue(new Callback<LogInResult>() {
             @Override
             public void onResponse(Call<LogInResult> call, Response<LogInResult> response) {
-                if (response.body().isSuccess()) {
-                    preferenceManager.setLoggedInStatus(true);
 
-                } else {
-                    createSnackbar(LoginActivity.this, loginCoordinator, response.body().getErrorMessage()).show();
-                    loginErrorOccured = true;
+                if (response.isSuccessful()) {
+                    if (response.body().isError()) {
+
+                        // Set Logged In status to 'true'
+                        preferenceManager.setLoggedInStatus(getApplicationContext(), true);
+                       // bookFairRepository.saveUserProfile(response.body().getProfile());
+
+                        createSnackbar(LoginActivity.this, loginCoordinator, "Login You In.").show();
+
+                        new Handler().postDelayed(() -> loginBtn.doResult(true), 2000);
+
+                    } else {
+                        createSnackbar(LoginActivity.this, loginCoordinator, response.body().getErrorMessage() ).show();
+
+                        loginBtn.doResult(false);
+                        new Handler().postDelayed(() -> loginBtn.reset(), 2000);
+                        loginErrorOccured = true;
+
+                    }
+
                 }
             }
 
             @Override
-            public void onFailure(Call<LogInResult> call, Throwable t) {
+            public  void onFailure(Call<LogInResult> call, Throwable t) {
                 if (t instanceof UnknownHostException) {
                 }else {
-                    //crashlytics goes here "Crashlytics.logException(t);"
-                    createSnackbar(LoginActivity.this, loginCoordinator, "Oops! Network error occurred. Try Again").show();
+                    createSnackbar(LoginActivity.this, loginCoordinator, "Oops! Check your internet connection.").show();
+                    loginBtn.doResult(false);
+                    new Handler().postDelayed(() -> loginBtn.reset(), 2000);
+
                 }
             }
         });
@@ -151,11 +154,10 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    private void showIndeterminateProgressDialog() {
-        new MaterialDialog.Builder(this)
-                .title(R.string.progress_dialog)
-                .content(R.string.please_wait)
-                .progress(true, 0)
-                .show();
+    private void goToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }
