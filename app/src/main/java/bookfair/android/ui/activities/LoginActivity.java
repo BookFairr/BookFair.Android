@@ -115,15 +115,17 @@ public class LoginActivity extends BaseActivity {
             public void onResponse(Call<LogInResult> call, Response<LogInResult> response) {
 
                 if (response.isSuccessful()) {
-                    if (response.body().isError()) {
+                    if (response.body().isSuccess()) {
 
                         // Set Logged In status to 'true'
                         preferenceManager.setLoggedInStatus(getApplicationContext(), true);
-                       // bookFairRepository.saveUserProfile(response.body().getProfile());
+                        bookFairRepository.saveUserProfile(response.body().getProfile());
 
-                        createSnackbar(LoginActivity.this, loginCoordinator, "Login You In.").show();
+                        loginBtn.doResult(true);
 
-                        new Handler().postDelayed(() -> loginBtn.doResult(true), 2000);
+                        new Handler().postDelayed(() -> {
+                            goToMainActivity();
+                        }, 2000);
 
                     } else {
                         createSnackbar(LoginActivity.this, loginCoordinator, response.body().getErrorMessage() ).show();
@@ -144,7 +146,6 @@ public class LoginActivity extends BaseActivity {
                     createSnackbar(LoginActivity.this, loginCoordinator, "Oops! Check your internet connection.").show();
                     loginBtn.doResult(false);
                     new Handler().postDelayed(() -> loginBtn.reset(), 2000);
-
                 }
             }
         });
