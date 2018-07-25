@@ -8,6 +8,7 @@ import bookfair.android.db.BookFairRepository;
 import bookfair.android.injection.module.ApplicationModule;
 import bookfair.android.ui.activities.BaseActivity;
 import bookfair.android.ui.activities.LoginActivity;
+import bookfair.android.ui.activities.MainActivity;
 import bookfair.android.ui.activities.SignUpActivity;
 import bookfair.android.ui.activities.WelcomeActivity;
 import dagger.Component;
@@ -22,5 +23,6 @@ public interface ApplicationComponent {
     void inject (LoginActivity loginActivity);
     void inject (SignUpActivity signUpActivity);
     void inject (RetrofitHelper retrofitHelper);
+    void inject (MainActivity mainActivity);
 
 }
