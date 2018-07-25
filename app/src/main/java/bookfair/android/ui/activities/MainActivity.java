@@ -3,7 +3,11 @@ package bookfair.android.ui.activities;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatDelegate;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -14,6 +18,7 @@ import bookfair.android.R;
 import bookfair.android.api.BookFairApiService;
 import bookfair.android.core.PreferenceManager;
 import bookfair.android.db.BookFairRepository;
+import bookfair.android.ui.views.ViewPagerNoSwipe;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.Lazy;
@@ -32,6 +37,14 @@ public class MainActivity extends BaseActivity {
     CoordinatorLayout mainCoordinator;
     @BindView(R.id.fab_home)
     FloatingActionButton fabHome;
+    @BindView(R.id.frame_container)
+    FrameLayout frameContainer;
+    @BindView(R.id.viewpager_no_swipe)
+    ViewPagerNoSwipe viewpagerNoSwipe;
+    @BindView(R.id.nested_linear)
+    LinearLayout nestedLinear;
+    @BindView(R.id.nested_scrollview)
+    NestedScrollView nestedScrollview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +53,9 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main_);
         ButterKnife.bind(this);
         applicationComponent(this).inject(MainActivity.this);
+
+        //disable viewpager swiping (this is a custom view pager)
+        viewpagerNoSwipe.setPagingEnabled(false);
 
         bottomNavigationBar
                 //add items to bottom nav bar
@@ -56,9 +72,15 @@ public class MainActivity extends BaseActivity {
                 .setBarBackgroundColor(R.color.icons)
                 .initialise();
 
+        //auto hide
+        bottomNavigationBar.setAutoHideEnabled(true);
+        //set bnb with fab
+        bottomNavigationBar.setFab(fabHome);
+
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
+
             }
 
             @Override
@@ -70,9 +92,5 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        //prevents auto hide
-        bottomNavigationBar.setAutoHideEnabled(false);
-        //set bnb with fab
-        bottomNavigationBar.setFab(fabHome);
     }
 }
