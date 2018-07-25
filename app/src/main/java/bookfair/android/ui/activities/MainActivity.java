@@ -2,6 +2,7 @@ package bookfair.android.ui.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -29,6 +30,8 @@ public class MainActivity extends BaseActivity {
     BottomNavigationBar bottomNavigationBar;
     @BindView(R.id.main_coordinator)
     CoordinatorLayout mainCoordinator;
+    @BindView(R.id.fab_home)
+    FloatingActionButton fabHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +56,15 @@ public class MainActivity extends BaseActivity {
                 .setBarBackgroundColor(R.color.icons)
                 .initialise();
 
-        bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener(){
+        bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
             }
+
             @Override
             public void onTabUnselected(int position) {
             }
+
             @Override
             public void onTabReselected(int position) {
             }
@@ -67,5 +72,7 @@ public class MainActivity extends BaseActivity {
 
         //prevents auto hide
         bottomNavigationBar.setAutoHideEnabled(false);
+        //set bnb with fab
+        bottomNavigationBar.setFab(fabHome);
     }
 }
