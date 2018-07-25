@@ -23,7 +23,5 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
-    <string name="progress_dialog">Login You In</string>
-    <string name="please_wait">Getting things ready for you.</string>
     <string name="password_strength">Password must contain 6 or more characters</string>
 </resources>

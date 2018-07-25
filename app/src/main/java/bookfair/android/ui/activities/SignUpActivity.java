@@ -32,6 +32,7 @@ import retrofit2.Response;
 
 import static bookfair.android.ui.views.SnackBarFactory.createSnackbar;
 import static bookfair.android.util.Util.isEmailValid;
+import static bookfair.android.util.Util.passwordStrength;
 
 public class SignUpActivity extends BaseActivity {
 
@@ -132,6 +133,12 @@ public class SignUpActivity extends BaseActivity {
             return;
         }
 
+        if (!passwordStrength(passwordEditText.getText().toString())) {
+            passwordEditText.setError(getString(R.string.password_strength));
+            signupBtn.reset();
+            return;
+        }
+
 
         Call<SignUpResult> resultCall = bookFairApiServiceLazy.get().attemptSignUp(emailEditText.getText().toString(), fullNameEditTex.getText().toString(),
                 usernameEditText.getText().toString(), passwordEditText.getText().toString());
@@ -147,6 +154,7 @@ public class SignUpActivity extends BaseActivity {
                         bookFairRepository.saveUserProfile(response.body().getUserProfile());
 
                         signupBtn.doResult(true);
+                        createSnackbar(SignUpActivity.this, signUpCoordinator, "Getting things ready..." ).show();
 
                         new Handler().postDelayed(() -> {
                             goToMainActivity();
