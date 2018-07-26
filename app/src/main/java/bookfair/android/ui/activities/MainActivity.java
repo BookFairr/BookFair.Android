@@ -1,8 +1,10 @@
 package bookfair.android.ui.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatDelegate;
 import android.widget.FrameLayout;
@@ -10,6 +12,8 @@ import android.widget.LinearLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
 import javax.inject.Inject;
 
@@ -35,7 +39,7 @@ public class MainActivity extends BaseActivity {
     @Inject
     BookFairRepository bookFairRepository;
     @BindView(R.id.bottom_navigation_bar)
-    BottomNavigationBar bottomNavigationBar;
+    AHBottomNavigation bottomNavigationBar;
     @BindView(R.id.main_coordinator)
     CoordinatorLayout mainCoordinator;
     @BindView(R.id.fab_home)
@@ -44,10 +48,6 @@ public class MainActivity extends BaseActivity {
     FrameLayout frameContainer;
     @BindView(R.id.viewpager_no_swipe)
     ViewPagerNoSwipe viewpagerNoSwipe;
-    @BindView(R.id.nested_linear)
-    LinearLayout nestedLinear;
-    @BindView(R.id.nested_scrollview)
-    NestedScrollView nestedScrollview;
 
     BottomBarAdapter bottomBarAdapter;
 
@@ -65,57 +65,56 @@ public class MainActivity extends BaseActivity {
         bottomBarAdapter = new BottomBarAdapter(getSupportFragmentManager());
         viewpagerNoSwipe.setAdapter(bottomBarAdapter);
 
+        // Create items
+        AHBottomNavigationItem item0 = new AHBottomNavigationItem(R.string.tab_1, R.drawable.ic_book_black_24dp, R.color.primary);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_2, R.drawable.ic_message_black_24dp, R.color.primary);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_3, R.drawable.ic_person_black_24dp, R.color.primary);
 
+        // Add items
+        bottomNavigationBar.addItem(item0);
+        bottomNavigationBar.addItem(item1);
+        bottomNavigationBar.addItem(item2);
 
-        bottomNavigationBar
-                //add items to bottom nav bar
-                .addItem(new BottomNavigationItem(R.drawable.ic_book_black_24dp, "Shop"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_message_black_24dp, "Messages"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_person_black_24dp, "Profile"))
+        // Set background color, active and inactive
+        bottomNavigationBar.setDefaultBackgroundColor(getResources().getColor(R.color.icons));
+        bottomNavigationBar.setAccentColor(getResources().getColor(R.color.primary));
+        bottomNavigationBar.setInactiveColor(getResources().getColor(R.color.secondary_text));
 
-                //bottom nav bar customization
-                .setMode(BottomNavigationBar.MODE_FIXED)
-                .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
-                .setActiveColor(R.color.primary)
-                .setInActiveColor(R.color.secondary_text)
-                .setBarBackgroundColor(R.color.icons)
-                .initialise();
+        // Disable the translation inside the CoordinatorLayout
+        bottomNavigationBar.setBehaviorTranslationEnabled(false);
 
+        // Enable the translation of the FloatingActionButton
+        bottomNavigationBar.manageFloatingActionButtonBehavior(fabHome);
 
-        bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(int position) {
+        // Force to tint the drawable (useful for font with icon for example)
+        bottomNavigationBar.setForceTint(true);
 
-                switch (position) {
-                    case 0:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new ShopFragment()).commitAllowingStateLoss();
-                        break;
+        // Manage titles
+        bottomNavigationBar.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
 
-                    case 1:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new MessagesFragment()).commitAllowingStateLoss();
-                        break;
+        // Set current item programmatically
+        bottomNavigationBar.setCurrentItem(0);
 
-                    case 2:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new ProfileFragment()).commitAllowingStateLoss();
-                        break;
-                }
+        // Set listeners
+        bottomNavigationBar.setOnTabSelectedListener((position, wasSelected) -> {
+
+            switch (position) {
+                case 0:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new ShopFragment()).commit();
+                    break;
+
+                case 1:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new MessagesFragment()).commit();
+                    break;
+
+                case 2:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new ProfileFragment()).commit();
+                    break;
             }
-
-            @Override
-            public void onTabUnselected(int position) {
-            }
-
-            @Override
-            public void onTabReselected(int position) {
-            }
+            return true;
         });
 
+}
 
-
-        //auto hide
-        bottomNavigationBar.setAutoHideEnabled(true);
-        //set bnb with fab
-        bottomNavigationBar.setFab(fabHome);
-    }
 
 }

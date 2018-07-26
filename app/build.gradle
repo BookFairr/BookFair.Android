@@ -69,6 +69,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-vision:15.0.2'
     implementation 'com.unstoppable:submitbutton:1.1.2'
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.0.4'
+    implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     implementation 'com.github.medyo:fancybuttons:1.8.4'
