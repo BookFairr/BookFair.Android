@@ -3,7 +3,6 @@ package bookfair.android.ui.activities;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatDelegate;
 import android.widget.FrameLayout;
@@ -18,6 +17,10 @@ import bookfair.android.R;
 import bookfair.android.api.BookFairApiService;
 import bookfair.android.core.PreferenceManager;
 import bookfair.android.db.BookFairRepository;
+import bookfair.android.ui.adapter.BottomBarAdapter;
+import bookfair.android.ui.fragments.ProfileFragment;
+import bookfair.android.ui.fragments.MessagesFragment;
+import bookfair.android.ui.fragments.ShopFragment;
 import bookfair.android.ui.views.ViewPagerNoSwipe;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +49,8 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.nested_scrollview)
     NestedScrollView nestedScrollview;
 
+    BottomBarAdapter bottomBarAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,12 +62,16 @@ public class MainActivity extends BaseActivity {
         //disable viewpager swiping (this is a custom view pager)
         viewpagerNoSwipe.setPagingEnabled(false);
 
+        bottomBarAdapter = new BottomBarAdapter(getSupportFragmentManager());
+        viewpagerNoSwipe.setAdapter(bottomBarAdapter);
+
+
+
         bottomNavigationBar
                 //add items to bottom nav bar
-                .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, "Home"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_book_black_24dp, "Shop"))
                 .addItem(new BottomNavigationItem(R.drawable.ic_message_black_24dp, "Messages"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_notifications_black_24dp, "Notifications"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_person_black_24dp, "Me"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_person_black_24dp, "Profile"))
 
                 //bottom nav bar customization
                 .setMode(BottomNavigationBar.MODE_FIXED)
@@ -72,15 +81,24 @@ public class MainActivity extends BaseActivity {
                 .setBarBackgroundColor(R.color.icons)
                 .initialise();
 
-        //auto hide
-        bottomNavigationBar.setAutoHideEnabled(true);
-        //set bnb with fab
-        bottomNavigationBar.setFab(fabHome);
 
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
 
+                switch (position) {
+                    case 0:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new ShopFragment()).commitAllowingStateLoss();
+                        break;
+
+                    case 1:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new MessagesFragment()).commitAllowingStateLoss();
+                        break;
+
+                    case 2:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new ProfileFragment()).commitAllowingStateLoss();
+                        break;
+                }
             }
 
             @Override
@@ -92,5 +110,12 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+
+
+        //auto hide
+        bottomNavigationBar.setAutoHideEnabled(true);
+        //set bnb with fab
+        bottomNavigationBar.setFab(fabHome);
     }
+
 }
