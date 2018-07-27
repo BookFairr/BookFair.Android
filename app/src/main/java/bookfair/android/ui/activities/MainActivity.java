@@ -1,17 +1,11 @@
 package bookfair.android.ui.activities;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatDelegate;
+import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
-import com.ashokvarma.bottomnavigation.BottomNavigationBar;
-import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
@@ -42,14 +36,16 @@ public class MainActivity extends BaseActivity {
     AHBottomNavigation bottomNavigationBar;
     @BindView(R.id.main_coordinator)
     CoordinatorLayout mainCoordinator;
-    @BindView(R.id.fab_home)
-    FloatingActionButton fabHome;
     @BindView(R.id.frame_container)
     FrameLayout frameContainer;
     @BindView(R.id.viewpager_no_swipe)
     ViewPagerNoSwipe viewpagerNoSwipe;
 
-    BottomBarAdapter bottomBarAdapter;
+    private BottomBarAdapter bottomBarAdapter;
+    private static final int SHOP_FRAGMENT = 0;
+    private static final int MESSAGES_FRAGMENT = 1;
+    private static final int PROFILE_FRAGMENT = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +56,7 @@ public class MainActivity extends BaseActivity {
         applicationComponent(this).inject(MainActivity.this);
 
         //disable viewpager swiping (this is a custom view pager)
-        viewpagerNoSwipe.setPagingEnabled(false);
+        //viewpagerNoSwipe.setPagingEnabled(false);
 
         bottomBarAdapter = new BottomBarAdapter(getSupportFragmentManager());
         viewpagerNoSwipe.setAdapter(bottomBarAdapter);
@@ -83,9 +79,6 @@ public class MainActivity extends BaseActivity {
         // Disable the translation inside the CoordinatorLayout
         bottomNavigationBar.setBehaviorTranslationEnabled(false);
 
-        // Enable the translation of the FloatingActionButton
-        bottomNavigationBar.manageFloatingActionButtonBehavior(fabHome);
-
         // Force to tint the drawable (useful for font with icon for example)
         bottomNavigationBar.setForceTint(true);
 
@@ -98,21 +91,21 @@ public class MainActivity extends BaseActivity {
         // Set listeners
         bottomNavigationBar.setOnTabSelectedListener((position, wasSelected) -> {
 
-            switch (position) {
-                case 0:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new ShopFragment()).commit();
-                    break;
-
-                case 1:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new MessagesFragment()).commit();
-                    break;
-
-                case 2:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new ProfileFragment()).commit();
-                    break;
+            if (position == SHOP_FRAGMENT)
+            {
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new ShopFragment()).commit();
+            }
+            else if (position == MESSAGES_FRAGMENT)
+            {
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new MessagesFragment()).commit();
+            }
+            else if (position == PROFILE_FRAGMENT)
+            {
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new ProfileFragment()).commit();
             }
             return true;
         });
+
 
 }
 
