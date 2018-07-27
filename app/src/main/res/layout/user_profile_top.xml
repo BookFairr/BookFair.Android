@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        android:id="@+id/profile_image"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center_horizontal"
+        android:clickable="true"
+        android:scaleType="centerCrop"
+        app:civ_border_color="@color/accent"
+        app:civ_border_width="3dp"
+        app:srcCompat="@drawable/avatar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="110dp"
+        android:layout_marginRight="110dp">
+
+        <me.grantland.widget.AutofitTextView
+            android:id="@+id/fullname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Full Name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/primary_text"
+            android:textStyle="bold"
+            app:minTextSize="10dp" />
+
+        <me.grantland.widget.AutofitTextView
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fullname"
+            android:layout_gravity="center_horizontal"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="username"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/primary_text"
+            android:textStyle="italic"
+            app:minTextSize="10dp" />
+
+        <me.grantland.widget.AutofitTextView
+            android:id="@+id/location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/username"
+            android:layout_gravity="center_horizontal"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Mandeville, Manc."
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/primary_text"
+            android:textStyle="normal"
+            app:minTextSize="10dp" />
+    </RelativeLayout>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/add_new_book"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/default_margin_top"
+        android:paddingBottom="@dimen/default_padding"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding"
+        fancy:fb_defaultColor="@color/accent"
+        fancy:fb_iconPosition="left"
+        fancy:fb_iconResource="@drawable/ic_add_black_24dp"
+        fancy:fb_radius="10dp"
+        fancy:fb_text="List a New Book"
+        fancy:fb_textColor="@color/icons" />
+</LinearLayout>

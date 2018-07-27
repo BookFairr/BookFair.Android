@@ -11,6 +11,7 @@ import bookfair.android.ui.activities.LoginActivity;
 import bookfair.android.ui.activities.MainActivity;
 import bookfair.android.ui.activities.SignUpActivity;
 import bookfair.android.ui.activities.WelcomeActivity;
+import bookfair.android.ui.fragments.ProfileFragment;
 import dagger.Component;
 
 @Singleton
@@ -24,5 +25,6 @@ public interface ApplicationComponent {
     void inject (SignUpActivity signUpActivity);
     void inject (RetrofitHelper retrofitHelper);
     void inject (MainActivity mainActivity);
+    void inject (ProfileFragment profileFragment);
 
 }

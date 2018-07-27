@@ -47,6 +47,8 @@ dependencies {
 
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'net.danlew:android.joda:2.9.4.1'
+    implementation 'me.grantland:autofittextview:0.2.+'
+    implementation 'com.facebook.shimmer:shimmer:0.2.0'
     implementation 'com.jonathanfinerty.once:once:1.2.2'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
