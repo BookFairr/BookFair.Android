@@ -9,11 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import bookfair.android.BookFairApp;
 import bookfair.android.R;
+import bookfair.android.api.BookFairApiService;
+import bookfair.android.core.PreferenceManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import dagger.Lazy;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.grantland.widget.AutofitTextView;
 import mehdi.sakout.fancybuttons.FancyButton;
@@ -23,6 +28,10 @@ import mehdi.sakout.fancybuttons.FancyButton;
  */
 public class ProfileFragment extends Fragment {
 
+    @Inject
+    PreferenceManager preferenceManager;
+    @Inject
+    Lazy<BookFairApiService> bookFairApiServiceLazy;
 
     @BindView(R.id.profile_image)
     CircleImageView profileImage;
@@ -61,6 +70,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         addNewBook.setOnClickListener(v -> listNewBook());
 

@@ -123,7 +123,11 @@ public class LoginActivity extends BaseActivity {
 
                         // Set Logged In status to 'true'
                         preferenceManager.setLoggedInStatus(getApplicationContext(), true);
-                        //bookFairRepository.saveUserProfile(response.body().getProfile());
+
+                       String fullname = response.body().getProfile().getFullname();
+                       preferenceManager.setUserFullName(fullname);
+                       String username = response.body().getProfile().getUsername();
+                       preferenceManager.setUsername(username);
 
                         loginBtn.doResult(true);
                         createSnackbar(LoginActivity.this, loginCoordinator, "Getting things ready..." ).show();
