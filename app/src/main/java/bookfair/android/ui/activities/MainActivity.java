@@ -14,7 +14,6 @@ import javax.inject.Inject;
 import bookfair.android.R;
 import bookfair.android.api.BookFairApiService;
 import bookfair.android.core.PreferenceManager;
-import bookfair.android.db.BookFairRepository;
 import bookfair.android.ui.adapter.BottomBarAdapter;
 import bookfair.android.ui.fragments.ProfileFragment;
 import bookfair.android.ui.fragments.MessagesFragment;
@@ -30,8 +29,6 @@ public class MainActivity extends BaseActivity {
     PreferenceManager preferenceManager;
     @Inject
     Lazy<BookFairApiService> bookFairApiServiceLazy;
-    @Inject
-    BookFairRepository bookFairRepository;
     @BindView(R.id.bottom_navigation_bar)
     AHBottomNavigation bottomNavigationBar;
     @BindView(R.id.main_coordinator)

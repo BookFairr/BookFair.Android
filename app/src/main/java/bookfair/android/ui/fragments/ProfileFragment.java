@@ -26,8 +26,6 @@ public class ProfileFragment extends Fragment {
 
     @BindView(R.id.profile_image)
     CircleImageView profileImage;
-    @BindView(R.id.fullname)
-    AutofitTextView fullname;
     @BindView(R.id.username)
     AutofitTextView username;
     @BindView(R.id.location)
@@ -35,6 +33,8 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.add_new_book)
     FancyButton addNewBook;
     Unbinder unbinder;
+    @BindView(R.id.fullname)
+    AutofitTextView fullname;
 
     public ProfileFragment() {
         // Required empty public constructor

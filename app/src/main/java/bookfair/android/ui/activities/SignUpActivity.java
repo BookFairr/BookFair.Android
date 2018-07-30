@@ -21,7 +21,6 @@ import bookfair.android.R;
 import bookfair.android.api.BookFairApiService;
 import bookfair.android.api.models.SignUpResult;
 import bookfair.android.core.PreferenceManager;
-import bookfair.android.db.BookFairRepository;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.Lazy;
@@ -44,8 +43,6 @@ public class SignUpActivity extends BaseActivity {
     PreferenceManager preferenceManager;
     @Inject
     Lazy<BookFairApiService> bookFairApiServiceLazy;
-    @Inject
-    BookFairRepository bookFairRepository;
 
     @BindView(R.id.facebook_login_btn)
     FancyButton facebookLoginBtn;
@@ -151,7 +148,6 @@ public class SignUpActivity extends BaseActivity {
 
                         // Set Logged In status to 'true'
                         preferenceManager.setLoggedInStatus(getApplicationContext(), true);
-                        bookFairRepository.saveUserProfile(response.body().getUserProfile());
 
                         signupBtn.doResult(true);
                         createSnackbar(SignUpActivity.this, signUpCoordinator, "Getting things ready..." ).show();

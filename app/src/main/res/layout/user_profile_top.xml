@@ -7,32 +7,24 @@
     android:background="@color/icons"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        android:id="@+id/profile_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="@dimen/default_margin_top"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/default_margin_top">
-
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-
-            android:id="@+id/profile_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            android:clickable="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/avatar"
-            app:civ_border_color="@color/icons"
-            app:civ_border_width="2dp" />
-
-    </RelativeLayout>
+        android:clickable="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/avatar"
+        app:civ_border_color="@color/icons"
+        app:civ_border_width="2dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="150dp"
-        android:layout_marginRight="150dp"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="@dimen/default_margin_top">
 
         <me.grantland.widget.AutofitTextView
@@ -78,8 +70,8 @@
 
     <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/add_new_book"
-        android:layout_width="250dp"
-        android:layout_height="45dp"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/default_margin_top"
         android:paddingBottom="@dimen/default_padding"
@@ -98,7 +90,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/default_margin_top"
         android:padding="@dimen/default_padding"
         android:text="Currently Listed Books"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"

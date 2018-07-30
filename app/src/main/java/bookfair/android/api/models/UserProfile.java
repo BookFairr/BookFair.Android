@@ -1,11 +1,7 @@
-package bookfair.android.db.models;
+package bookfair.android.api.models;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
+public class UserProfile {
 
-public class UserProfile extends RealmObject {
-
-    @PrimaryKey
     private String email;
     private String fullname;
     private String username;

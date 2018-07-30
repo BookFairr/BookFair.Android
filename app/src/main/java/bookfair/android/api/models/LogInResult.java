@@ -1,6 +1,6 @@
 package bookfair.android.api.models;
 
-import bookfair.android.db.models.UserProfile;
+import bookfair.android.api.models.UserProfile;
 
 public class LogInResult {
 

@@ -8,7 +8,6 @@ import net.danlew.android.joda.JodaTimeAndroid;
 import bookfair.android.injection.component.ApplicationComponent;
 import bookfair.android.injection.component.DaggerApplicationComponent;
 import bookfair.android.injection.module.ApplicationModule;
-import io.realm.Realm;
 import jonathanfinerty.once.Once;
 
 public class BookFairApp extends Application {
@@ -26,8 +25,6 @@ public class BookFairApp extends Application {
 
         JodaTimeAndroid.init(this);
         Once.initialise(this);
-        Realm.init(this);
-
 
     }
 

@@ -21,7 +21,7 @@ import bookfair.android.R;
 import bookfair.android.api.BookFairApiService;
 import bookfair.android.api.models.LogInResult;
 import bookfair.android.core.PreferenceManager;
-import bookfair.android.db.BookFairRepository;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.Lazy;
@@ -43,8 +43,6 @@ public class LoginActivity extends BaseActivity {
     PreferenceManager preferenceManager;
     @Inject
     Lazy<BookFairApiService> bookFairApiServiceLazy;
-    @Inject
-    BookFairRepository bookFairRepository;
 
     @BindView(R.id.login_email_editText)
     TextInputEditText loginEmailEditText;
