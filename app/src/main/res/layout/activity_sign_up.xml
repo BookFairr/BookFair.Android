@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/icons"
     tools:context=".ui.activities.SignUpActivity">
 
     <android.support.v4.widget.NestedScrollView
