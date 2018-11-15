@@ -22,5 +22,8 @@
     <string name="title_activity_login2">Sign in</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="email_or_username">Email or Username</string>
+    <string name="email">Email</string>
+    <string name="progress_dialog">Login You In</string>
+    <string name="please_wait">Getting things ready for you.</string>
+    <string name="password_strength">Password must contain 6 or more characters</string>
 </resources>

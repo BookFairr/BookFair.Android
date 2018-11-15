@@ -9,7 +9,7 @@ public class PreferenceManager {
      private SharedPreferences.Editor editor;
 
      public static final String PREF_FILE_NAME = "book_fair_preferences";
-     private static final String IS_LOGIN = "is_logged_in";
+     private static final String LOGGED_IN_STATUS = "logged_in_status";
 
      public PreferenceManager(Context context) {
           preferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
@@ -20,13 +20,22 @@ public class PreferenceManager {
      }
 
      /**
-      * sets current status of the user
-      *
+      * set the login status
+      * @param context
       * @param status
       */
-     public void setLoggedInStatus(boolean status) {
-         editor.putBoolean(IS_LOGIN, status);
-         editor.commit();
+     public void setLoggedInStatus(Context context, boolean status) {
+         editor.putBoolean(LOGGED_IN_STATUS, status);
+         editor.apply();
+     }
+
+     /**
+      * Get the Login Status
+      * @param context
+      * @return boolean: login status
+      */
+     public static boolean getLoggedInStatus(Context context) {
+          return preferences.getBoolean(LOGGED_IN_STATUS, false);
      }
 
 }

@@ -1,13 +1,19 @@
 package bookfair.android.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.unstoppable.submitbuttonview.SubmitButton;
+
+import java.net.UnknownHostException;
 
 import javax.inject.Inject;
 
@@ -20,14 +26,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.Lazy;
 import mehdi.sakout.fancybuttons.FancyButton;
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static bookfair.android.ui.views.SnackBarFactory.createSnackbar;
 import static bookfair.android.util.Util.isEmailValid;
 
 public class SignUpActivity extends BaseActivity {
 
     private static final String TAG = SignUpActivity.class.getSimpleName();
+    private boolean signUpErrorOccured;
 
 
     @Inject
@@ -51,14 +60,16 @@ public class SignUpActivity extends BaseActivity {
     TextInputEditText usernameEditText;
     @BindView(R.id.username_layout)
     TextInputLayout usernameLayout;
-    @BindView(R.id.password_editText)
+    @BindView(R.id.login_password_editText)
     TextInputEditText passwordEditText;
-    @BindView(R.id.password_layout)
+    @BindView(R.id.login_password_layout)
     TextInputLayout passwordLayout;
     @BindView(R.id.signup_btn)
-    FancyButton signupBtn;
+    SubmitButton signupBtn;
     @BindView(R.id.linear_layout)
     LinearLayout linearLayout;
+    @BindView(R.id.sign_up_coordinator)
+    CoordinatorLayout signUpCoordinator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,85 +98,93 @@ public class SignUpActivity extends BaseActivity {
 
     private void attemptSignUp() {
 
-        // Reset errors.
-        emailEditText.setError(null);
-        fullNameEditTex.setError(null);
-        usernameEditText.setError(null);
-        passwordEditText.setError(null);
-
-        boolean cancel = false;
-        View focusView = null;
-
         // Check for a valid email address.
         if (TextUtils.isEmpty(emailEditText.getText().toString())) {
             emailEditText.setError(getString(R.string.error_field_required));
-            focusView = emailEditText;
-            cancel = true;
-        } else if (!isEmailValid(emailEditText.getText().toString())) {
+            signupBtn.reset();
+            return;
+        }
+
+        if (!isEmailValid(emailEditText.getText().toString())) {
             emailEditText.setError(getString(R.string.error_invalid_email));
-            focusView = emailEditText;
-            cancel = true;
+            signupBtn.reset();
+            return;
         }
 
         // Check for a valid name.
         if (TextUtils.isEmpty(fullNameEditTex.getText().toString())) {
             fullNameEditTex.setError(getString(R.string.error_field_required));
-            focusView = fullNameEditTex;
-            cancel = true;
+            signupBtn.reset();
+            return;
         }
 
         // Check for a valid username.
         if (TextUtils.isEmpty(usernameEditText.getText().toString())) {
             usernameEditText.setError(getString(R.string.error_field_required));
-            focusView = usernameEditText;
-            cancel = true;
+            signupBtn.reset();
+            return;
         }
 
         //Check for a valid password.
         if (TextUtils.isEmpty(passwordEditText.getText().toString())) {
             passwordEditText.setError(getString(R.string.error_field_required));
-            focusView = passwordEditText;
-            cancel = true;
+            signupBtn.reset();
+            return;
         }
 
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            signUpGo();
-        }
-    }
 
-    private void signUpGo() {
-
-        retrofit2.Call<SignUpResult> resultCall = bookFairApiServiceLazy.get().attemptSignUp(emailEditText.getText().toString(), fullNameEditTex.getText().toString(),
+        Call<SignUpResult> resultCall = bookFairApiServiceLazy.get().attemptSignUp(emailEditText.getText().toString(), fullNameEditTex.getText().toString(),
                 usernameEditText.getText().toString(), passwordEditText.getText().toString());
 
         resultCall.enqueue(new Callback<SignUpResult>() {
             @Override
-            public void onResponse(retrofit2.Call<SignUpResult> call, Response<SignUpResult> response) {
-                if (response.body().isSuccess()) {
-                    preferenceManager.setLoggedInStatus(true);
-                    bookFairRepository.saveUserProfiles(response.body().getData());
-                    Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<SignUpResult> call, Response<SignUpResult> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().isSuccess()) {
 
+                        // Set Logged In status to 'true'
+                        preferenceManager.setLoggedInStatus(getApplicationContext(), true);
+                        bookFairRepository.saveUserProfile(response.body().getUserProfile());
 
-                } else {
-                    Toast.makeText(SignUpActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        signupBtn.doResult(true);
+
+                        new Handler().postDelayed(() -> {
+                            goToMainActivity();
+                        }, 2000);
+
+                    }
+                    else
+                    {
+
+                    createSnackbar(SignUpActivity.this, signUpCoordinator, response.body().getErrorMessage()).show();
+
+                    signupBtn.doResult(false);
+                    new Handler().postDelayed(() -> signupBtn.reset(), 2000);
+                    signUpErrorOccured = true;
+                }
+            }
+        }
+
+            @Override
+            public void onFailure(Call<SignUpResult> call, Throwable t) {
+                if (t instanceof UnknownHostException) {
+                }else {
+
+                    createSnackbar(SignUpActivity.this, signUpCoordinator, "Oops! Network error occurred. Try Again").show();
+                    signupBtn.doResult(false);
+                    new Handler().postDelayed(() -> signupBtn.reset(), 2000);
 
                 }
             }
-
-            @Override
-            public void onFailure(retrofit2.Call<SignUpResult> call, Throwable t) {
-                // Log error here if request failed
-                Log.e(TAG, t.toString());
-            }
         });
+    }
 
+    private void goToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }
+
 
