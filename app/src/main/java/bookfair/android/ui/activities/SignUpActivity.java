@@ -3,32 +3,27 @@ package bookfair.android.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.unstoppable.submitbuttonview.SubmitButton;
-
-import java.net.UnknownHostException;
 
 import javax.inject.Inject;
 
 import bookfair.android.R;
-import bookfair.android.api.BookFairApiService;
-import bookfair.android.api.models.SignUpResult;
 import bookfair.android.core.PreferenceManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import dagger.Lazy;
-import mehdi.sakout.fancybuttons.FancyButton;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static bookfair.android.ui.views.SnackBarFactory.createSnackbar;
 import static bookfair.android.util.Util.isEmailValid;
@@ -42,26 +37,14 @@ public class SignUpActivity extends BaseActivity {
 
     @Inject
     PreferenceManager preferenceManager;
-    @Inject
-    Lazy<BookFairApiService> bookFairApiServiceLazy;
 
-    @BindView(R.id.facebook_login_btn)
-    FancyButton facebookLoginBtn;
     @BindView(R.id.email_editText)
     TextInputEditText emailEditText;
     @BindView(R.id.email_layout)
     TextInputLayout emailLayout;
-    @BindView(R.id.fullname_editTex)
-    TextInputEditText fullNameEditTex;
-    @BindView(R.id.fullname_layout)
-    TextInputLayout fullnameLayout;
-    @BindView(R.id.username_editText)
-    TextInputEditText usernameEditText;
-    @BindView(R.id.username_layout)
-    TextInputLayout usernameLayout;
-    @BindView(R.id.login_password_editText)
+    @BindView(R.id.password_editText)
     TextInputEditText passwordEditText;
-    @BindView(R.id.login_password_layout)
+    @BindView(R.id.password_layout)
     TextInputLayout passwordLayout;
     @BindView(R.id.signup_btn)
     SubmitButton signupBtn;
@@ -82,68 +65,86 @@ public class SignUpActivity extends BaseActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        facebookLoginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                facebookLogin();
-            }
-        });
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attemptSignUp();
+                createAccount();
             }
         });
     }
 
-    private void facebookLogin() {
 
-    }
+    private void createAccount() {
 
-    private void attemptSignUp() {
+        String email = emailEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(emailEditText.getText().toString())) {
+        if (TextUtils.isEmpty(email)) {
             emailEditText.setError(getString(R.string.error_field_required));
             signupBtn.reset();
             return;
         }
 
-        if (!isEmailValid(emailEditText.getText().toString())) {
+        if (!isEmailValid(email)) {
             emailEditText.setError(getString(R.string.error_invalid_email));
             signupBtn.reset();
             return;
         }
 
-        // Check for a valid name.
-        if (TextUtils.isEmpty(fullNameEditTex.getText().toString())) {
-            fullNameEditTex.setError(getString(R.string.error_field_required));
-            signupBtn.reset();
-            return;
-        }
-
-        // Check for a valid username.
-        if (TextUtils.isEmpty(usernameEditText.getText().toString())) {
-            usernameEditText.setError(getString(R.string.error_field_required));
-            signupBtn.reset();
-            return;
-        }
-
         //Check for a valid password.
-        if (TextUtils.isEmpty(passwordEditText.getText().toString())) {
+        if (TextUtils.isEmpty(password)) {
             passwordEditText.setError(getString(R.string.error_field_required));
             signupBtn.reset();
             return;
         }
 
-        if (!passwordStrength(passwordEditText.getText().toString())) {
+        if (!passwordStrength(password)) {
             passwordEditText.setError(getString(R.string.password_strength));
             signupBtn.reset();
             return;
         }
 
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    signupBtn.doResult(true);
+                    createSnackbar(SignUpActivity.this, signUpCoordinator, "Account Successfully Created").show();
 
-        Call<SignUpResult> resultCall = bookFairApiServiceLazy.get().attemptSignUp(emailEditText.getText().toString(), fullNameEditTex.getText().toString(),
+                    new Handler().postDelayed(() -> {
+                        goToMainActivity();
+                    }, 2000);
+                } else {
+
+                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                        createSnackbar(SignUpActivity.this, signUpCoordinator, "Account Already Registered").show();
+                    } else {
+                        createSnackbar(SignUpActivity.this, signUpCoordinator, task.getException().getMessage()).show();
+                    }
+
+                    signupBtn.doResult(false);
+                    new Handler().postDelayed(() -> signupBtn.reset(), 2000);
+                    signUpErrorOccured = true;
+                }
+            }
+
+        });
+
+    }
+
+    private void goToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+}
+
+
+        /**
+         * Manually auth setup before firebase auth was implemented
+        Call<SignUpResult> resultCall = bookFairApiServiceLazy.get().createAccount(emailEditText.getText().toString(), fullNameEditTex.getText().toString(),
                 usernameEditText.getText().toString(), passwordEditText.getText().toString());
 
         resultCall.enqueue(new Callback<SignUpResult>() {
@@ -179,26 +180,19 @@ public class SignUpActivity extends BaseActivity {
             }
         }
 
-            @Override
-            public void onFailure(Call<SignUpResult> call, Throwable t) {
-                if (t instanceof UnknownHostException) {
-                }else {
+        @Override
+        public void onFailure(@NonNull Task<AuthResult> task, Throwable t) {
+        if (t instanceof UnknownHostException) {
+        } else {
 
-                    createSnackbar(SignUpActivity.this, signUpCoordinator, "Oops! Network error occurred. Try Again").show();
-                    signupBtn.doResult(false);
-                    new Handler().postDelayed(() -> signupBtn.reset(), 2000);
+        createSnackbar(SignUpActivity.this, signUpCoordinator, "Oops! Network error occurred. Try Again").show();
+        signupBtn.doResult(false);
+        new Handler().postDelayed(() -> signupBtn.reset(), 2000);
 
-                }
-            }
-        });
-    }
+        }
+        }
 
-    private void goToMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-    }
-}
+         */
+
 
 

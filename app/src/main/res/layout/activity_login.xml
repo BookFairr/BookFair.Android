@@ -23,7 +23,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/login_email_layout"
+                android:id="@+id/email_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin_top"
@@ -31,7 +31,7 @@
                 app:errorEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/login_email_editText"
+                    android:id="@+id/email_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
@@ -42,7 +42,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/login_password_layout"
+                android:id="@+id/password_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/secondary_text"
@@ -51,7 +51,7 @@
                 app:passwordToggleTint="@color/accent">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/login_password_editText"
+                    android:id="@+id/password_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
@@ -114,20 +114,6 @@
                     android:background="@color/divider" />
             </LinearLayout>
 
-            <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/facebook_login_btn"
-                android:layout_width="250dp"
-                android:layout_height="45dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/default_margin_top"
-                android:paddingBottom="@dimen/default_padding"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
-                android:paddingTop="@dimen/default_padding"
-                fancy:fb_defaultColor="@color/facebook_blue"
-                fancy:fb_radius="7dp"
-                fancy:fb_text="Log in with Facebook"
-                fancy:fb_textColor="@color/icons" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
