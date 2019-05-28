@@ -27,19 +27,19 @@
         android:layout_marginStart="70dp"
         android:layout_marginTop="@dimen/default_margin_top">
 
-        <me.grantland.widget.AutofitTextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/fullname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:singleLine="true"
-            android:text="Full Name"
+            android:text=""
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/primary_text"
             android:textStyle="bold"
             app:minTextSize="10dp" />
 
-        <me.grantland.widget.AutofitTextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             android:layout_gravity="center_horizontal"
             android:maxLines="1"
             android:singleLine="true"
-            android:text="username"
+            android:text=""
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/primary_text"
             android:textStyle="italic"
@@ -61,7 +61,7 @@
             android:layout_gravity="center_horizontal"
             android:maxLines="1"
             android:singleLine="true"
-            android:text="Mandeville, Manc."
+            android:text=""
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/primary_text"
             android:textStyle="normal"
@@ -82,7 +82,7 @@
         fancy:fb_iconPosition="left"
         fancy:fb_iconResource="@drawable/ic_add_black_24dp"
         fancy:fb_radius="10dp"
-        fancy:fb_text="List a New Book"
+        fancy:fb_text=" List a New Book"
         fancy:fb_textColor="@color/icons" />
 
 

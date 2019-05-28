@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "111105574037",
+    "firebase_url": "https://bookkfair-94454.firebaseio.com",
+    "project_id": "bookkfair-94454",
+    "storage_bucket": "bookkfair-94454.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111105574037:android:51b3e733ed949557",
+        "android_client_info": {
+          "package_name": "com.bookfair.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111105574037-lu0r40snlpi77suv5rhlni7a768c27ek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bookfair.android",
+            "certificate_hash": "34ef37ad26bfc23a4454b89663025c0abfd355af"
+          }
+        },
+        {
+          "client_id": "111105574037-cu8nhd1m9q7fodmkvlh7efgfu548r859.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVx7TbDMDDYUhllQbbVMxEaREYOpBYgpM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111105574037-cu8nhd1m9q7fodmkvlh7efgfu548r859.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

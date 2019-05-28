@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.unstoppable.submitbuttonview.SubmitButton;
 
 import java.net.UnknownHostException;
@@ -69,12 +70,17 @@ public class SignUpActivity extends BaseActivity {
     @BindView(R.id.sign_up_coordinator)
     CoordinatorLayout signUpCoordinator;
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
         applicationComponent(this).inject(SignUpActivity.this);
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
         facebookLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +154,10 @@ public class SignUpActivity extends BaseActivity {
 
                         // Set Logged In status to 'true'
                         preferenceManager.setLoggedInStatus(getApplicationContext(), true);
+
+                        preferenceManager.setUserFullName(response.body().getUserProfile().getFullname());
+                        preferenceManager.setUsername(response.body().getUserProfile().getUsername());
+
 
                         signupBtn.doResult(true);
                         createSnackbar(SignUpActivity.this, signUpCoordinator, "Getting things ready..." ).show();

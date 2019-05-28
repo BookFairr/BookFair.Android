@@ -41,8 +41,8 @@ public class PreferenceManager {
           return preferences.getBoolean(LOGGED_IN_STATUS, false);
      }
 
-     public void setUserFullName (String fullName) {
-         editor.putString(USER_FULL_NAME, fullName);
+     public void setUserFullName (String fullname) {
+         editor.putString(USER_FULL_NAME, fullname);
          editor.commit();
      }
 

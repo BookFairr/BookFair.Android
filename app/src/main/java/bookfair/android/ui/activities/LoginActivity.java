@@ -58,8 +58,6 @@ public class LoginActivity extends BaseActivity {
     LinearLayout linearLayout;
     @BindView(R.id.login_btn)
     SubmitButton loginBtn;
-    @BindView(R.id.logo)
-    AppCompatImageView logo;
     @BindView(R.id.login_coordinator)
     CoordinatorLayout loginCoordinator;
 
@@ -124,10 +122,11 @@ public class LoginActivity extends BaseActivity {
                         // Set Logged In status to 'true'
                         preferenceManager.setLoggedInStatus(getApplicationContext(), true);
 
-                       String fullname = response.body().getProfile().getFullname();
-                       preferenceManager.setUserFullName(fullname);
-                       String username = response.body().getProfile().getUsername();
-                       preferenceManager.setUsername(username);
+                        try {
+                            preferenceManager.setUserFullName(response.body().getProfile().getFullname());
+                            preferenceManager.setUsername(response.body().getProfile().getUsername());
+
+                        }catch (Exception e){}
 
                         loginBtn.doResult(true);
                         createSnackbar(LoginActivity.this, loginCoordinator, "Getting things ready..." ).show();

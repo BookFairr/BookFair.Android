@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity {
         applicationComponent(this).inject(MainActivity.this);
 
         //disable viewpager swiping (this is a custom view pager)
-        //viewpagerNoSwipe.setPagingEnabled(false);
+        viewpagerNoSwipe.setPagingEnabled(false);
 
         bottomBarAdapter = new BottomBarAdapter(getSupportFragmentManager());
         viewpagerNoSwipe.setAdapter(bottomBarAdapter);
@@ -82,9 +82,6 @@ public class MainActivity extends BaseActivity {
         // Manage titles
         bottomNavigationBar.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
 
-        // Set current item programmatically
-        bottomNavigationBar.setCurrentItem(0);
-
         // Set listeners
         bottomNavigationBar.setOnTabSelectedListener((position, wasSelected) -> {
 
@@ -103,6 +100,8 @@ public class MainActivity extends BaseActivity {
             return true;
         });
 
+        // Set current item programmatically
+        bottomNavigationBar.setCurrentItem(0);
 
 }
 

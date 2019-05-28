@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,15 +36,17 @@ public class ProfileFragment extends Fragment {
 
     @BindView(R.id.profile_image)
     CircleImageView profileImage;
-    @BindView(R.id.username)
-    AutofitTextView username;
+
     @BindView(R.id.location)
     AutofitTextView location;
     @BindView(R.id.add_new_book)
     FancyButton addNewBook;
     Unbinder unbinder;
     @BindView(R.id.fullname)
-    AutofitTextView fullname;
+    AppCompatTextView fullname;
+    @BindView(R.id.username)
+    AppCompatTextView username;
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -70,6 +73,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        fullname.setText(preferenceManager.getUserFullName());
+        username.setText(preferenceManager.getUsername());
 
 
         addNewBook.setOnClickListener(v -> listNewBook());
