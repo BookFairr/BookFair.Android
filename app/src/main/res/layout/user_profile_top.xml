@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/icons"
@@ -10,74 +11,90 @@
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
 
         android:id="@+id/profile_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="@dimen/default_margin_top"
+        android:layout_width="96dp"
+        android:layout_height="91dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
         android:scaleType="centerCrop"
         android:src="@drawable/avatar"
         app:civ_border_color="@color/icons"
-        app:civ_border_width="2dp" />
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.161" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="@dimen/default_margin_top">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/fullname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:text=""
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/primary_text"
-            android:textStyle="bold"
-            app:minTextSize="10dp" />
+    <TextView
+        android:id="@+id/textviewfullname"
+        android:layout_width="95dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:text="Full Name"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toEndOf="@+id/profile_image"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fullname"
-            android:layout_gravity="center_horizontal"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:text=""
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/primary_text"
-            android:textStyle="italic"
-            app:minTextSize="10dp" />
+    <TextView
+        android:id="@+id/textviewcityparish"
+        android:layout_width="93dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:text="City, Parish"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.089"
+        app:layout_constraintStart_toEndOf="@+id/profile_image"
+        app:layout_constraintTop_toBottomOf="@+id/textviewfullname" />
 
-        <me.grantland.widget.AutofitTextView
-            android:id="@+id/location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/username"
-            android:layout_gravity="center_horizontal"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:text=""
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/primary_text"
-            android:textStyle="normal"
-            app:minTextSize="10dp" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/textViewEditProfile"
+        android:layout_width="130dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/grey_border"
+        android:text="Edit Your Profile"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.479"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textviewcityparish" />
 
     <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/add_new_book"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/default_margin_top"
-        android:paddingBottom="@dimen/default_padding"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
         android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
         android:paddingTop="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:paddingBottom="@dimen/default_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEditProfile"
+        app:layout_constraintVertical_bias="0.0"
         fancy:fb_defaultColor="@color/primary"
         fancy:fb_iconPosition="left"
         fancy:fb_iconResource="@drawable/ic_add_black_24dp"
@@ -85,20 +102,4 @@
         fancy:fb_text=" List a New Book"
         fancy:fb_textColor="@color/icons" />
 
-
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:padding="@dimen/default_padding"
-        android:text="Currently Listed Books"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/primary_text"
-        android:textStyle="bold" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider" />
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

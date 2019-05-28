@@ -109,6 +109,8 @@ public class SignUpActivity extends BaseActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    // Set Logged In status to 'true'
+                    preferenceManager.setLoggedInStatus(getApplicationContext(), true);
                     signupBtn.doResult(true);
                     createSnackbar(SignUpActivity.this, signUpCoordinator, "Account Successfully Created").show();
 
@@ -119,13 +121,15 @@ public class SignUpActivity extends BaseActivity {
 
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                         createSnackbar(SignUpActivity.this, signUpCoordinator, "Account Already Registered").show();
+                        signupBtn.doResult(false);
+                        new Handler().postDelayed(() -> signupBtn.reset(), 2000);
+                        signUpErrorOccured = true;
                     } else {
                         createSnackbar(SignUpActivity.this, signUpCoordinator, task.getException().getMessage()).show();
+                        signupBtn.doResult(false);
+                        new Handler().postDelayed(() -> signupBtn.reset(), 2000);
+                        signUpErrorOccured = true;
                     }
-
-                    signupBtn.doResult(false);
-                    new Handler().postDelayed(() -> signupBtn.reset(), 2000);
-                    signUpErrorOccured = true;
                 }
             }
 

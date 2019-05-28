@@ -109,6 +109,8 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if  (task.isSuccessful()) {
+                            // Set Logged In status to 'true'
+                            preferenceManager.setLoggedInStatus(getApplicationContext(), true);
                             loginBtn.doResult(true);
                             createSnackbar(LoginActivity.this, loginCoordinator, "Getting Things Ready...").show();
 
@@ -118,7 +120,9 @@ public class LoginActivity extends BaseActivity {
 
                         } else {
                             createSnackbar(LoginActivity.this, loginCoordinator, task.getException().getMessage()).show();
-
+                            loginBtn.doResult(false);
+                            new Handler().postDelayed(() -> loginBtn.reset(), 2000);
+                            loginErrorOccured = true;
                         }
                     }
                 });
