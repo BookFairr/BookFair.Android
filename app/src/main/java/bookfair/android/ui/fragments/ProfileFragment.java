@@ -1,14 +1,18 @@
 package bookfair.android.ui.fragments;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -17,6 +21,7 @@ import bookfair.android.BookFairApp;
 import bookfair.android.R;
 import bookfair.android.api.BookFairApiService;
 import bookfair.android.core.PreferenceManager;
+import bookfair.android.ui.activities.AccountSettingsActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -45,8 +50,10 @@ public class ProfileFragment extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.textviewfullname)
     TextView fullname;
-    @BindView(R.id.textViewEditProfile)
-    TextView editYourProfile;
+    @BindView(R.id.profiletoolbar)
+    Toolbar profileToolbar;
+    @BindView(R.id.profilemenu)
+    ImageView profileMenu;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -66,9 +73,21 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         unbinder = ButterKnife.bind(this, view);
+        setupToolbar();
         return view;
 
     }
+
+    private void setupToolbar(){
+        profileMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AccountSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

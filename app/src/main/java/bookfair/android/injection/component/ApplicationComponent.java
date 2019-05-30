@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 
 import bookfair.android.api.RetrofitHelper;
 import bookfair.android.injection.module.ApplicationModule;
+import bookfair.android.ui.activities.AccountSettingsActivity;
 import bookfair.android.ui.activities.BaseActivity;
 import bookfair.android.ui.activities.LoginActivity;
 import bookfair.android.ui.activities.MainActivity;
@@ -24,5 +25,6 @@ public interface ApplicationComponent {
     void inject (RetrofitHelper retrofitHelper);
     void inject (MainActivity mainActivity);
     void inject (ProfileFragment profileFragment);
+    void inject (AccountSettingsActivity accountSettingsActivity);
 
 }

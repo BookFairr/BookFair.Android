@@ -10,5 +10,6 @@
     <dimen name="default_margin_top">10dp</dimen>
     <dimen name="signup_login_btn_width">250</dimen>
     <dimen name="signup_login_btn_height">40</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="5dp"
-                android:background="@drawable/white_grey_border_bottom">
+                android:background="@drawable/grey_border_bottom">
 
                 <include layout="@layout/user_profile_top" />
 
