@@ -31,7 +31,7 @@ public class SettingsStatePagerAdapter extends FragmentStatePagerAdapter {
     }
 
 
-    private void addFragment(Fragment fragment, String fragmentName){
+    public void addFragment(Fragment fragment, String fragmentName){
         fragmentList.add(fragment);
         fragments.put(fragment, fragmentList.size()-1);
         fragmentNumbers.put(fragmentName, fragmentList.size()-1);

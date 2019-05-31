@@ -28,9 +28,9 @@
     <string name="tab_2">Messages</string>
     <string name="tab_3">Profile</string>
     <string name="profile_fragment">Profile Fragment</string>
-    <string name="edit_profile"> Edit Profile</string>
-    <string name="change_password">Change Password</string>
-    <string name="log_out">Log Out</string>
+    <string name="edit_profile_fragment"> Edit Profile</string>
+    <string name="change_password_fragment">Change Password</string>
+    <string name="log_out_frag">Log Out</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -39,4 +39,9 @@
     <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fbYOUR_APP_ID</string>
     <string name="title_activity_account_settings">AccountSettingsActivity</string>
+    <string name="forgot_password_let_us_help_you">Forgot Password? Let us help you.</string>
+    <string name="or">OR</string>
+    <string name="location">Location</string>
+    <string name="name">Name</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>

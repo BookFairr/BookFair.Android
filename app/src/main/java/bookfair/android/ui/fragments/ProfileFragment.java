@@ -1,13 +1,11 @@
 package bookfair.android.ui.fragments;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +25,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dagger.Lazy;
 import de.hdodenhof.circleimageview.CircleImageView;
-import me.grantland.widget.AutofitTextView;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
@@ -48,7 +45,7 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.add_new_book)
     FancyButton addNewBook;
     Unbinder unbinder;
-    @BindView(R.id.textviewfullname)
+    @BindView(R.id.textviewname)
     TextView fullname;
     @BindView(R.id.profiletoolbar)
     Toolbar profileToolbar;
@@ -79,12 +76,10 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setupToolbar(){
-        profileMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AccountSettingsActivity.class);
-                startActivity(intent);
-            }
+        profileMenu.setOnClickListener(
+                v -> {
+            Intent intent = new Intent(getActivity(), AccountSettingsActivity.class);
+            startActivity(intent);
         });
     }
 
