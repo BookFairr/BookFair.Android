@@ -18,7 +18,6 @@
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/avatar"
                 app:civ_border_color="@color/primary_text"
                 app:civ_border_width="2dp" />
 
@@ -30,8 +29,8 @@
                 android:layout_centerHorizontal="true"
                 android:text="Change Profile Photo"
                 android:textColor="@color/facebook_blue"
-                android:textStyle="bold"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
 
             <!-- username section -->
@@ -56,10 +55,10 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="40dp"
                     android:background="@null"
-                    android:maxLines="1"
-                    android:singleLine="true"
                     android:hint="username"
-                    android:inputType="textNoSuggestions" />
+                    android:inputType="textNoSuggestions"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
             </RelativeLayout>
 
@@ -95,17 +94,30 @@
             <RelativeLayout
                 android:id="@+id/relLayout3"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_below="@+id/relLayout2"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/grey_border_bottom">
+                android:layout_marginTop="15dp">
 
-                <org.angmarch.views.NiceSpinner
+                <TextView
+                    android:id="@+id/locationTextview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="Location"
+                    android:textColor="@color/primary_text"
+                    android:textSize="15sp" />
+
+                <Spinner
                     android:id="@+id/location_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_margin="16dp"
-                    app:arrowTint="@color/primary_dark"/>
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/locationTextview"
+                    android:backgroundTint="@color/primary_dark" />
 
             </RelativeLayout>
 
@@ -114,11 +126,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/relLayout3"
-                android:layout_marginTop="50dp"
                 android:layout_centerVertical="true"
+                android:layout_marginTop="60dp"
                 android:text="PERSONAL INFORMATION"
                 android:textColor="@color/primary_text"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
 

@@ -43,9 +43,10 @@ public class AccountSettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accountsettings);
         ButterKnife.bind(this);
+        applicationComponent(this).inject(AccountSettingsActivity.this);
         context = AccountSettingsActivity.this;
         Log.d(TAG, "onCreate Started.");
-        applicationComponent(this).inject(AccountSettingsActivity.this);
+
 
         setupSettingsList();
         setupFragments();

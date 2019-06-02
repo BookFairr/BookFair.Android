@@ -7,9 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import org.angmarch.views.NiceSpinner;
-import org.angmarch.views.OnSpinnerItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -17,15 +17,22 @@ import java.util.List;
 
 import bookfair.android.BookFairApp;
 import bookfair.android.R;
+import bookfair.android.ui.activities.AccountSettingsActivity;
+import bookfair.android.util.UniversalImageLoader;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProfileFragment extends Fragment {
 
-    Unbinder unbinder;
     @BindView(R.id.location_spinner)
-    NiceSpinner locationSpinner;
+    Spinner locationSpinner;
+    Unbinder unbinder;
+    @BindView(R.id.back_arrow_editprofile)
+    ImageView backarrow;
+    @BindView(R.id.profile_photo)
+    CircleImageView profilePhoto;
 
     public EditProfileFragment() {
         // Required empty public constructor
@@ -35,22 +42,8 @@ public class EditProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        List<String> location = new LinkedList<>(Arrays.asList("Kingston","Montego Bay", "Spanish Town","Mandeville",
-                "Ocho Rios","Port Antonio","May Pen","Negril","Falmouth","PortMore","Black River","Old Harbour","Savanna La Mar","Lucea",
-                "Port Maria", "Morant Bay"));
-        locationSpinner.attachDataSource(location);
-
-        locationSpinner.setOnSpinnerItemSelectedListener((parent, view, position, id) -> {
-            // This example uses String, but your type can be any
-            String item = parent.getItemAtPosition(position).toString();
-
-        });
-
-
-
-
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,8 +51,28 @@ public class EditProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_editprofile, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        //back button navigation
+        backarrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
+        String[] location = {"Kingston","Montego Bay", "Spanish Town","Mandeville",
+                "Ocho Rios","Port Antonio","May Pen","Negril","Falmouth","PortMore","Black River","Old Harbour","Savanna La Mar","Lucea",
+                "Port Maria", "Morant Bay"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, location);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        locationSpinner.setAdapter(adapter);
+
         return view;
 
+    }
 
+    private void setProfileImage(){
+            String imgUrl = "https://www.vectorstock.com/royalty-free-vector/default-avatar-profile-icon-vector-18942381";
+        UniversalImageLoader.setImage(imgUrl,profilePhoto, null,"");
     }
 }

@@ -2,6 +2,7 @@ package bookfair.android;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -9,7 +10,7 @@ import bookfair.android.injection.component.ApplicationComponent;
 import bookfair.android.injection.component.DaggerApplicationComponent;
 import bookfair.android.injection.module.ApplicationModule;
 
-public class BookFairApp extends Application {
+public class BookFairApp extends MultiDexApplication {
 
     private ApplicationComponent applicationComponent;
 
