@@ -75,4 +75,14 @@ public class UserProfile {
     public void setRegistered(Boolean registered) {
         this.registered = registered;
     }
+
+    /***
+     * service firebase.storage {
+     *   match /b/{bucket}/o {
+     *     match /{allPaths=**} {
+     *       allow read, write: if request.auth != null;
+     *     }
+     *   }
+     * }
+     */
 }

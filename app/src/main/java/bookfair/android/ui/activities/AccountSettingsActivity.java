@@ -51,7 +51,9 @@ public class AccountSettingsActivity extends BaseActivity {
         setupSettingsList();
         setupFragments();
         //setup back arrow navigation to "Profile Fragment"
-        backArrow.setOnClickListener(v -> finish());
+        backArrow.setOnClickListener(v -> {
+            finish();
+        });
 
     }
     //setup fragment using the functionality from our state pager adapter util class

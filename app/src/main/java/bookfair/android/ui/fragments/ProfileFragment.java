@@ -34,12 +34,9 @@ public class ProfileFragment extends Fragment {
 
     @Inject
     PreferenceManager preferenceManager;
-    @Inject
-    Lazy<BookFairApiService> bookFairApiServiceLazy;
 
     @BindView(R.id.profile_image)
     CircleImageView profileImage;
-
     @BindView(R.id.textviewcityparish)
     TextView location;
     @BindView(R.id.add_new_book)
@@ -71,6 +68,7 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         unbinder = ButterKnife.bind(this, view);
         setupToolbar();
+        addNewBook.setOnClickListener((View v) -> {});
         return view;
 
     }
@@ -88,10 +86,6 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
-        addNewBook.setOnClickListener(v -> listNewBook());
-
     }
 
     @Override
@@ -100,7 +94,4 @@ public class ProfileFragment extends Fragment {
         unbinder.unbind();
     }
 
-    public void listNewBook() {
-
-    }
 }
